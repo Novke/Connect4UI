@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class Alert extends RuntimeException{
 
-    private final String message;
+    protected final String message;
 
     public Alert(String message){
         super(message);
