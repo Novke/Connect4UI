@@ -10,6 +10,7 @@ public class CljUtil {
 
     public final IFn require;
     public final IFn initBoard;
+    public final IFn resetBoard;
     public final IFn atomize;
     public final IFn play;
     public final IFn autoplay;
@@ -20,23 +21,35 @@ public class CljUtil {
         require.invoke(clojure.java.api.Clojure.read("bot.bot"));
 
         initBoard = clojure.java.api.Clojure.var("board.board", "init-board");
+        resetBoard = clojure.java.api.Clojure.var("board.board", "reset-board!");
         atomize = clojure.java.api.Clojure.var("clojure.core", "atom");
 
-        play = clojure.java.api.Clojure.var("board.board", "play!");
-        autoplay = clojure.java.api.Clojure.var("bot.bot", "autoplay!");
+//        play = clojure.java.api.Clojure.var("board.board", "play!");
+        play = clojure.java.api.Clojure.var("bot.bot", "responsive-play!");
+//        autoplay = clojure.java.api.Clojure.var("bot.bot", "autoplay!");
+        autoplay = clojure.java.api.Clojure.var("bot.bot", "responsive-autoplay!");
     }
 
     public Object initBoard() {
         return initBoard.invoke();
     }
+    public void resetBoard(Object board){
+        resetBoard.invoke(board);
+    }
     public Object atomize(Object arg){
         return atomize.invoke(arg);
     }
-    public Object play(Object board, int move, Object igrac){
-        return play.invoke(board, move, igrac);
+//    public Object play(Object board, int move, Object igrac){
+//        return play.invoke(board, move, igrac);
+//    }
+    public Object play(Object board, int move, Object igrac, Object status){
+        return play.invoke(board, move, igrac, status);
     }
-    public Object autoplay(Object board, int move, int depth, Object igrac){
-        return autoplay.invoke(board, move, depth, igrac);
+//    public Object autoplay(Object board, int move, int depth, Object igrac){
+//        return autoplay.invoke(board, move, depth, igrac);
+//    }
+    public Object autoplay(Object board, int move, int depth, Object igrac, Object status){
+        return autoplay.invoke(board, move, depth, igrac, status);
     }
     public String boardToString(Atom board){
 

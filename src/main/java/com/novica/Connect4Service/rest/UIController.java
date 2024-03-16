@@ -17,6 +17,12 @@ public class UIController {
         return ResponseEntity.ok(gameLogic.startGame());
     }
 
+    @PostMapping("/reset")
+    public ResponseEntity<?> resetGame() {
+        gameLogic.resetBoard();
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/play")
     public ResponseEntity<?> playMove(@RequestParam int move) {
         return ResponseEntity.ok(gameLogic.playMove(move));

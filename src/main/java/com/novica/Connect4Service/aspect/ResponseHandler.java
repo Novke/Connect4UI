@@ -24,6 +24,7 @@ public class ResponseHandler {
 
         Atom board = gameLogic.getBoard();
         Atom igrac = gameLogic.getIgrac();
+        Atom status = gameLogic.getStatus();
 
         StringBuilder builder = new StringBuilder();
         builder
