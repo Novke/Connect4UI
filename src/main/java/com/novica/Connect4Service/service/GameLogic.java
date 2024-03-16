@@ -37,4 +37,13 @@ public class GameLogic {
         }
     }
 
+    public Object autoplayMove(int move, int depth) {
+        try {
+            cljUtil.autoplay(board, move, depth, igrac);
+            return board.deref();
+        } catch (NullPointerException ex){
+            throw new GameNotStartedAlert();
+        }
+    }
+
 }

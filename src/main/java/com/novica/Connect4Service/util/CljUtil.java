@@ -12,6 +12,7 @@ public class CljUtil {
     public final IFn initBoard;
     public final IFn atomize;
     public final IFn play;
+    public final IFn autoplay;
 
     public CljUtil() {
         require = clojure.java.api.Clojure.var("clojure.core", "require");
@@ -22,6 +23,7 @@ public class CljUtil {
         atomize = clojure.java.api.Clojure.var("clojure.core", "atom");
 
         play = clojure.java.api.Clojure.var("board.board", "play!");
+        autoplay = clojure.java.api.Clojure.var("bot.bot", "autoplay!");
     }
 
     public Object initBoard() {
@@ -32,6 +34,9 @@ public class CljUtil {
     }
     public Object play(Object board, int move, Object igrac){
         return play.invoke(board, move, igrac);
+    }
+    public Object autoplay(Object board, int move, int depth, Object igrac){
+        return autoplay.invoke(board, move, depth, igrac);
     }
     public String boardToString(Atom board){
 

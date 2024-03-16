@@ -22,4 +22,8 @@ public class UIController {
         return ResponseEntity.ok(gameLogic.playMove(move));
     }
 
+    @PostMapping("/playvsai/level/{depth}")
+    public ResponseEntity<?> autoplayMove(@RequestParam int move, @PathVariable int depth) {
+        return ResponseEntity.ok(gameLogic.autoplayMove(move, depth));
+    }
 }
