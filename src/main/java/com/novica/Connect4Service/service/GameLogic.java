@@ -1,7 +1,9 @@
 package com.novica.Connect4Service.service;
 
 import clojure.lang.Atom;
+import com.novica.Connect4Service.exception.GameNotStartedAlert;
 import com.novica.Connect4Service.util.CljUtil;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,21 +13,32 @@ public class GameLogic {
 
     private final CljUtil cljUtil;
 
-    private static Atom board;
-    private static Atom igrac;
+    private Atom board;
+    private Atom igrac;
+    @Getter
+    private int igrac1pobede = 0;
+    @Getter
+    private int igrac2pobede = 0;
 
     public Object startGame() {
-        igrac = (Atom) cljUtil.atomize.invoke(1);
-        board = (Atom) cljUtil.atomize.invoke(cljUtil.initBoard.invoke());
+        igrac = (Atom) cljUtil.atomize(1);
+        board = (Atom) cljUtil.atomize(cljUtil.initBoard());
         return board.deref();
     }
 
     public Object playMove(int move) {
         try {
-            cljUtil.play.invoke(board, move, igrac);
+            cljUtil.play(board, move, igrac);
             return board.deref();
         } catch (NullPointerException ex){
-            return "Game not started";
+            throw new GameNotStartedAlert();
         }
+    }
+
+    public Object getBoard() {
+        return board.deref();
+    }
+    public Integer getIgrac() {
+        return (Integer) igrac.deref();
     }
 }
