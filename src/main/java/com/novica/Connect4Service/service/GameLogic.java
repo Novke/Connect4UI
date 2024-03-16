@@ -13,7 +13,9 @@ public class GameLogic {
 
     private final CljUtil cljUtil;
 
+    @Getter
     private Atom board;
+    @Getter
     private Atom igrac;
     @Getter
     private int igrac1pobede = 0;
@@ -35,10 +37,4 @@ public class GameLogic {
         }
     }
 
-    public Object getBoard() {
-        return board.deref();
-    }
-    public Integer getIgrac() {
-        return (Integer) igrac.deref();
-    }
 }
