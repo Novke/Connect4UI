@@ -3,6 +3,7 @@ package com.novica.Connect4Service.util;
 import clojure.lang.Atom;
 import clojure.lang.IFn;
 import clojure.lang.PersistentVector;
+import com.novica.Connect4Service.exception.GameNotStartedAlert;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -53,33 +54,37 @@ public class CljUtil {
     }
     public String boardToString(Atom board){
 
-        StringBuilder builder = new StringBuilder();
+        try {
+            StringBuilder builder = new StringBuilder();
 
-        //dodaje indekse kolona
-        builder.append("  ");
-        for (int i = 1; i < 8; i++) builder.append(i).append(" ");
-        builder.append("\n");
+            //dodaje indekse kolona
+            builder.append("  ");
+            for (int i = 1; i < 8; i++) builder.append(i).append(" ");
+            builder.append("\n");
 
-        //dodaje red prazne linije
-        for (int i = 0; i < 17; i++) builder.append("-");
-        builder.append("\n");
+            //dodaje red prazne linije
+            for (int i = 0; i < 17; i++) builder.append("-");
+            builder.append("\n");
 
-        for (int i = 5; i >= 0; i--) {
-            builder.append("|")
-                    .append(" ");
-            for (int j = 0; j < 7; j++) {
-                                                                                     //red  //kolona
-                builder.append(((PersistentVector)((PersistentVector)board.deref()).get(i)).get(j))
+            for (int i = 5; i >= 0; i--) {
+                builder.append("|")
                         .append(" ");
+                for (int j = 0; j < 7; j++) {
+                    //red  //kolona
+                    builder.append(((PersistentVector) ((PersistentVector) board.deref()).get(i)).get(j))
+                            .append(" ");
+                }
+                builder.append("|")
+                        .append("\n");
             }
-            builder.append("|")
-                    .append("\n");
+
+            //dodaje red prazne linije
+            builder.append("-".repeat(17));
+
+            return builder.toString();
+        } catch (NullPointerException ex){
+            throw new GameNotStartedAlert();
         }
-
-        //dodaje red prazne linije
-        for (int i = 0; i < 17; i++) builder.append("-");
-
-        return builder.toString();
     }
 
 }

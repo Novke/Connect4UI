@@ -1,6 +1,8 @@
 package com.novica.Connect4Service.service;
 
 import clojure.lang.Atom;
+import com.novica.Connect4Service.event.BotFailed;
+import com.novica.Connect4Service.event.BotPlayed;
 import com.novica.Connect4Service.event.Event;
 import com.novica.Connect4Service.event.GameEnded;
 import com.novica.Connect4Service.exception.GameNotStartedAlert;
@@ -34,7 +36,11 @@ public class GameLogic {
     }
 
     public void resetBoard() {
-        cljUtil.resetBoard(board);
+        try {
+            cljUtil.resetBoard(board);
+        } catch (NullPointerException ex){
+            throw new GameNotStartedAlert();
+        }
         status = (Atom) cljUtil.atomize(-1);
     }
 
@@ -51,9 +57,11 @@ public class GameLogic {
     public Object autoplayMove(int move, int depth) {
         try {
             cljUtil.autoplay(board, move, depth, igrac, status);
-            return board.deref();
+            throw new BotPlayed();
         } catch (NullPointerException ex){
             throw new GameNotStartedAlert();
+        } catch (Exception ex){
+            throw new BotFailed();
         }
     }
 
