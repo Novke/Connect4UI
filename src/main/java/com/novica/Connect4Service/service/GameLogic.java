@@ -64,7 +64,10 @@ public class GameLogic {
             throw new BotPlayed();
         } catch (NullPointerException ex){
             throw new GameNotStartedAlert();
+        } catch (BotPlayed ex){
+            throw ex;
         } catch (Exception ex){
+            ex.printStackTrace();
             throw new BotFailed();
         }
     }
