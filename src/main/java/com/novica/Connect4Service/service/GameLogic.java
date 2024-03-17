@@ -3,8 +3,8 @@ package com.novica.Connect4Service.service;
 import clojure.lang.Atom;
 import com.novica.Connect4Service.event.BotFailed;
 import com.novica.Connect4Service.event.BotPlayed;
-import com.novica.Connect4Service.event.Event;
 import com.novica.Connect4Service.event.GameEnded;
+import com.novica.Connect4Service.exception.Alert;
 import com.novica.Connect4Service.exception.GameNotStartedAlert;
 import com.novica.Connect4Service.util.CljUtil;
 import lombok.Getter;
@@ -51,6 +51,10 @@ public class GameLogic {
             return board.deref();
         } catch (NullPointerException ex){
             throw new GameNotStartedAlert();
+        } catch (GameEnded ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new Alert(ex.getMessage());
         }
     }
 

@@ -23,7 +23,7 @@ public class ExceptionHandler {
         StringBuilder builder = new StringBuilder();
 
         long status = (Long) gameLogic.getStatus().deref();
-        builder.append("===========================\n");
+        builder.append("===========================");
         if (status == 100){
             builder.append("\n").append("=== Igrac 1 je pobedio! === ").append("\n");
             gameLogic.player1win();
@@ -37,7 +37,7 @@ public class ExceptionHandler {
 
         builder.append("\n").append("REZULTAT: ").append("\n")
                 .append("Igrac 1: ").append(gameLogic.getIgrac1pobede()).append("\n")
-                .append("Igrac 2: ").append(gameLogic.getIgrac2pobede()).append("\n");
+                .append("Igrac 2: ").append(gameLogic.getIgrac2pobede()).append("\n\n");
 
         builder.append(cljUtil.boardToString(gameLogic.getBoard())).append("\n");
 
